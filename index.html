@@ -1,330 +1,230 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width,initial-scale=1" />
-<title>YETI</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>YETI DRINK</title>
 
 <style>
-  /* ШРИФТ */
-  @font-face {
-    font-family: "ZingRust";
-    src: url("ZingRust.ttf") format("truetype");
-  }
+@font-face {
+  font-family: "ZingRust";
+  src: url("ZingRust.ttf");
+}
 
-  :root{
-    --pink:#ff8abf;
-    --white:#ffffff;
-    --blue:#377ceb;
-    --overlay-opacity:0.12;
-  }
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "ZingRust", Arial, Helvetica, sans-serif;
+  color: #377ceb;
+  text-align: center;
+  background: linear-gradient(90deg, #ff8abf, #ffffff, #ff8abf);
+  background-size: 300% 300%;
+  animation: gradientMove 12s ease infinite;
+}
 
-  *{box-sizing:border-box;}
-  html,body{height:100%}
+@keyframes gradientMove {
+  0% {background-position: 0% 50%;}
+  50% {background-position: 100% 50%;}
+  100% {background-position: 0% 50%;}
+}
 
-  body{
-    margin:0;
-    overflow-x:hidden;
-    background:linear-gradient(90deg, var(--pink), #ffd2e8, var(--white), #ffeaf4);
-    background-size:300% 300%;
-    animation:gradientShift 18s ease-in-out infinite;
-    position:relative;
-  }
+/* Граффити фон */
+body::before {
+  content:"";
+  position:fixed;
+  top:0; left:0; right:0; bottom:0;
+  background:url('graffiti.png') no-repeat center center;
+  background-size: cover;
+  opacity:0.15;
+  z-index:-1;
+}
 
-  @keyframes gradientShift{
-    0%{background-position:0% 50%}
-    50%{background-position:100% 50%}
-    100%{background-position:0% 50%}
-  }
+/* Стикер */
+.sticker {
+  position: fixed;
+  top: 15px;
+  right: 15px;
+  width: 90px;
+  z-index: 1000;
+  filter: drop-shadow(0 8px 12px rgba(0,0,0,0.25));
+  animation: spin 8s linear infinite;
+}
 
-  /* Граффити */
-  .graffiti{
-    position:fixed;
-    inset:0;
-    width:100%;
-    height:100%;
-    object-fit:cover;
-    pointer-events:none;
-    z-index:0;
-    opacity:var(--overlay-opacity);
-    mix-blend-mode:multiply;
-  }
+@keyframes spin {from {transform:rotate(0deg);} to {transform:rotate(360deg);}}
 
-  .page{
-    position:relative;
-    z-index:2;
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    padding:50px 20px 140px;
-    gap:32px;
-  }
+/* Header */
+.header {padding: 20px;}
+.header img {max-width:180px; width:60%;}
 
-  /* ЛОГО */
-  .logo{
-    max-width:220px;
-    width:50%;
-    filter:drop-shadow(0 6px 10px rgba(0,0,0,0.25));
-  }
+/* Текст под логотипом */
+.logo-text {
+  font-family: "ZingRust";
+  background:white;
+  color:#377ceb;
+  border:2px solid #377ceb;
+  border-radius:20px;
+  padding:20px;
+  margin:15px auto;
+  max-width: 700px;
+  box-shadow:0 8px 18px rgba(0,0,0,0.15);
+}
 
-  /* ОПИСАНИЕ */
-  .tagline{
-    font-family:"ZingRust";
-    color:var(--blue);
-    font-size:clamp(18px,3vw,28px);
-    line-height:1.35;
-    padding:22px 26px;
-    border:3px solid var(--blue);
-    border-radius:18px;
-    background:rgba(255,255,255,0.75);
-    box-shadow:0 10px 28px rgba(0,0,0,0.2);
-    backdrop-filter:blur(6px);
-    max-width:900px;
-    text-align:center;
-  }
+/* Плашка на мазке */
+.label-brush {
+  font-family: "ZingRust";
+  display:inline-block;
+  position:relative;
+  padding:10px 20px;
+  color:#377ceb;
+  font-size:1.5em;
+  margin:20px 0 10px 0;
+  background: rgba(255,138,191,0.85);
+  border-radius:15px;
+  transform: rotate(-3deg);
+}
 
-  /* СТИКЕР */
-  .sticker{
-    position:fixed;
-    top:20px;
-    right:20px;
-    width:95px;
-    animation:spin 8s linear infinite;
-    filter:drop-shadow(0 6px 10px rgba(0,0,0,0.25));
-    z-index:1000;
-  }
+/* Карусель */
+.carousel-container {position:relative; margin:40px auto; max-width:700px; overflow:hidden;}
+.carousel {display:flex; transition: transform 0.5s ease;}
+.slide {min-width:100%; user-select:none; position:relative;}
+.slide img, .slide video {width:100%; border-radius:20px; box-shadow:0 10px 20px rgba(0,0,0,0.25);}
+.caption {font-family:"ZingRust"; background:white; color:#377ceb; border-radius:15px; padding:15px; margin-top:10px; max-width:90%; box-shadow:0 8px 18px rgba(0,0,0,0.15); margin-left:auto; margin-right:auto; font-size:1.2em;}
+.arrow {position:absolute; top:50%; transform:translateY(-50%); font-size:2em; color:#377ceb; cursor:pointer; user-select:none; z-index:10;}
+.arrow.left {left:10px;}
+.arrow.right {right:10px;}
+.dots {text-align:center; margin-top:15px;}
+.dot {display:inline-block; width:12px; height:12px; background:#ddd; border-radius:50%; margin:0 4px; cursor:pointer;}
+.dot.active {background:#377ceb;}
 
-  @keyframes spin{
-    from{transform:rotate(0deg)}
-    to{transform:rotate(360deg)}
-  }
+/* Жалобы кнопка */
+.feedback-link {
+  display:inline-block;
+  margin:60px auto 80px;
+  background:#377ceb;
+  color:#fff;
+  padding:18px 30px;
+  border-radius:15px;
+  font-size:1.2em;
+  font-weight:700;
+  text-decoration:none;
+  box-shadow:0 8px 16px rgba(0,0,0,0.15);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+.feedback-link:hover {transform: scale(1.05); box-shadow:0 12px 22px rgba(0,0,0,0.25);}
 
-  /* ЗАГОЛОВОК С МАЗКОМ */
-  .paint-title{
-    font-family:"ZingRust";
-    font-size:42px;
-    color:var(--blue);
-    background:var(--pink);
-    padding:22px 40px;
-    border-radius:28px;
-    box-shadow:0 10px 25px rgba(0,0,0,0.22);
-    transform:rotate(-2deg);
-    margin-top:40px;
-  }
-
-  /* КАРУСЕЛЬ */
-  .carousel{
-    width:90%;
-    max-width:600px;
-    position:relative;
-    overflow:hidden;
-    margin-top:20px;
-  }
-
-  .carousel-track{
-    display:flex;
-    transition:transform 0.6s ease;
-  }
-
-  .carousel-slide{
-    min-width:100%;
-    text-align:center;
-  }
-
-  .carousel-slide img{
-    width:100%;
-    border-radius:22px;
-    box-shadow:0 12px 28px rgba(0,0,0,0.25);
-  }
-
-  .dish-text{
-    font-family:"ZingRust";
-    color:var(--blue);
-    padding:14px 20px;
-    margin:14px auto 0;
-    width:90%;
-    border:3px solid var(--blue);
-    border-radius:16px;
-    background:white;
-    font-size:22px;
-    box-shadow:0 8px 20px rgba(0,0,0,0.18);
-  }
-
-  /* СТРЕЛКИ */
-  .arrow{
-    position:absolute;
-    top:50%;
-    transform:translateY(-50%);
-    font-size:38px;
-    color:var(--blue);
-    cursor:pointer;
-    font-weight:bold;
-    text-shadow:0 3px 6px rgba(0,0,0,0.25);
-    z-index:10;
-  }
-
-  .arrow-left{left:8px;}
-  .arrow-right{right:8px;}
-
-  /* ТОЧКИ */
-  .dots{
-    display:flex;
-    justify-content:center;
-    margin-top:14px;
-    gap:10px;
-  }
-
-  .dot{
-    width:12px;
-    height:12px;
-    border-radius:50%;
-    background:#b8cfff;
-    cursor:pointer;
-    transition:0.3s;
-  }
-
-  .dot.active{
-    background:var(--blue);
-    transform:scale(1.25);
-  }
 </style>
 </head>
-
 <body>
 
-<!-- ГРАФФИТИ -->
-<img class="graffiti" src="graffiti.png" alt="">
+<!-- Музыка -->
+<audio autoplay loop>
+  <source src="My.mp3" type="audio/mpeg">
+</audio>
 
-<!-- СТИКЕР -->
+<!-- Стикер -->
 <img src="sticker.png" class="sticker" alt="sticker">
 
-<main class="page">
+<header class="header">
+  <img src="logo.png" alt="Логотип">
+</header>
 
-  <!-- ЛОГО -->
-  <img src="logo.png" class="logo">
+<div class="logo-text">
+YETI — кафе с авторскими напитками на основе чая и натурального пюре и завтраками целый день. Это место для тех, кто живёт в движении, выбирает вкусы, свободу и комьюнити по вайбу
+</div>
 
-  <!-- ТЕКСТ -->
-  <div class="tagline">
-    YETI — кафе с авторскими напитками на основе чая и натурального пюре и завтраками целый день.
-    Это место для тех, кто живёт в движении, выбирает вкусы, свободу и комьюнити по вайбу.
-  </div>
 
-  <div style="height:40px;"></div>
-
-  <!-- ЗАГОЛОВОК -->
-  <div class="paint-title">салаты</div>
-
-  <!-- КАРУСЕЛЬ -->
+<!-- Примеры каруселей меню -->
+<div class="label-brush">Салаты</div>
+<div class="carousel-container" id="salats-carousel-container" data-autoplay="true" data-interval="5000">
   <div class="carousel">
-    <div class="carousel-track">
-
-      <div class="carousel-slide">
-        <img src="Salat1.jpg">
-        <div class="dish-text">Салат с ростбифом и соусом из тунца 540 ₽</div>
-      </div>
-
-      <div class="carousel-slide">
-        <img src="Salat2.jpg">
-        <div class="dish-text">Салат фитнес с соусом дзадзики и семенами льна 360₽</div>
-      </div>
-
-      <div class="carousel-slide">
-        <img src="Salat3.jpg">
-        <div class="dish-text">Грин салат с лангустинами 570₽</div>
-      </div>
-
-    </div>
-
-    <!-- СТРЕЛКИ -->
-    <div class="arrow arrow-left" id="prev">&#10094;</div>
-    <div class="arrow arrow-right" id="next">&#10095;</div>
+    <div class="slide"><img src="Salat1.jpg"><div class="caption">Салат с ростбифом и соусом из тунца 540 ₽</div></div>
+    <div class="slide"><img src="Salat2.jpg"><div class="caption">Салат фитнес с соусом дзадзики и семенами льна 360₽</div></div>
+    <div class="slide"><img src="Salat3.jpg"><div class="caption">Грин салат с лангустинами 570₽</div></div>
   </div>
-
-  <!-- ТОЧКИ -->
+  <div class="arrow left">&#10094;</div>
+  <div class="arrow right">&#10095;</div>
   <div class="dots">
-    <div class="dot active" data-slide="0"></div>
-    <div class="dot" data-slide="1"></div>
-    <div class="dot" data-slide="2"></div>
+    <span class="dot active"></span>
+    <span class="dot"></span>
+    <span class="dot"></span>
   </div>
+</div>
 
-</main>
+
+  <div class="label-brush">Яйца</div>
+<div class="carousel-container" id="eggs-carousel-container" data-autoplay="true" data-interval="5000">
+  <div class="carousel">
+    <div class="slide"><img src="Яйца1.jpg"><div class="caption">Глазунья с ростбифом и белой фасолью 440 ₽</div></div>
+    <div class="slide"><img src="Яйца2.jpg"><div class="caption">Французский омлет с мортаделлой и зеленью 440₽</div></div>
+    <div class="slide"><img src="Яйца3.jpg"><div class="caption">Скрембл с лососем и страчателлой 690₽</div></div>
+  </div>
+  <div class="arrow left">&#10094;</div>
+  <div class="arrow right">&#10095;</div>
+  <div class="dots">
+    <span class="dot active"></span>
+    <span class="dot"></span>
+    <span class="dot"></span>
+  </div>
+</div>
+
+<!-- Другие карусели (каши, брускетты, драники, вайб, напитки) вставляются аналогично -->
 
 <script>
-  const track = document.querySelector('.carousel-track');
-  const slides = document.querySelectorAll('.carousel-slide');
-  const dots = document.querySelectorAll('.dot');
+// Функция инициализации карусели с автопрокруткой и удержанием
+function initCarousel(container){
+  const carousel=container.querySelector('.carousel');
+  const track=carousel;
+  const slides=Array.from(track.children);
+  const left=container.querySelector('.arrow.left');
+  const right=container.querySelector('.arrow.right');
+  const dots=Array.from(container.querySelectorAll('.dot'));
+  const captionEl=container.querySelector('.caption');
+  const intervalMs=Number(container.dataset.interval)||5000;
+  let idx=0, autoplayTimer=null, pausedByHold=false;
 
-  let index = 0;
-
-  function updateCarousel() {
-    track.style.transform = `translateX(-${index * 100}%)`;
-
-    dots.forEach(dot => dot.classList.remove("active"));
-    dots[index].classList.add("active");
+  function update(){
+    track.style.transform=`translateX(-${idx*100}%)`;
+    dots.forEach((d,i)=>d.classList.toggle('active',i===idx));
+    if(captionEl){
+      const captions={};
+      if(captions[container.id]) captionEl.textContent=captions[container.id][idx];
+    }
+    slides.forEach((s,i)=>{
+      const v=s.querySelector('video'); if(!v) return;
+      if(i===idx) v.play().catch(()=>{}); else v.pause();
+    });
   }
 
-  document.getElementById("next").onclick = () => {
-    index = (index + 1) % slides.length;
-    updateCarousel();
-  };
+  function next(){idx=(idx+1)%slides.length;update();}
+  function prev(){idx=(idx-1+slides.length)%slides.length;update();}
+  if(right) right.addEventListener('click',()=>{next(); resetAuto();});
+  if(left) left.addEventListener('click',()=>{prev(); resetAuto();});
+  dots.forEach((d,i)=>d.addEventListener('click',()=>{idx=i;update();resetAuto();}));
 
-  document.getElementById("prev").onclick = () => {
-    index = (index - 1 + slides.length) % slides.length;
-    updateCarousel();
-  };
+  function startAuto(){ stopAuto(); if(!pausedByHold) autoplayTimer=setInterval(next,intervalMs);}
+  function stopAuto(){ if(autoplayTimer){clearInterval(autoplayTimer); autoplayTimer=null;}}
+  function resetAuto(){startAuto();}
 
-  dots.forEach(dot => {
-    dot.onclick = () => {
-      index = Number(dot.dataset.slide);
-      updateCarousel();
-    };
+  slides.forEach(slide=>{
+    slide.addEventListener('mousedown',holdStart);
+    slide.addEventListener('touchstart',holdStart,{passive:true});
+    slide.addEventListener('mouseup',holdEnd);
+    slide.addEventListener('mouseleave',holdEnd);
+    slide.addEventListener('touchend',holdEnd);
+    slide.addEventListener('touchcancel',holdEnd);
   });
 
-  /* АВТОПРОКРУТКА 5 сек */
-  setInterval(() => {
-    index = (index + 1) % slides.length;
-    updateCarousel();
-  }, 5000);
+  function holdStart(){ pausedByHold=true; stopAuto(); const v=this.querySelector('video'); if(v) v.pause();}
+  function holdEnd(){ pausedByHold=false; const v=this.querySelector('video'); if(v) v.play().catch(()=>{}); startAuto(); }
+
+  update();
+  if(container.dataset.autoplay==="true") startAuto();
+  document.addEventListener('visibilitychange',()=>{if(document.hidden) stopAuto(); else startAuto();});
+  return {update,startAuto,stopAuto};
+}
+
+document.addEventListener('DOMContentLoaded',()=>{ document.querySelectorAll('.carousel-container').forEach(c=>initCarousel(c)); });
 </script>
 
-<!-- Автоматическая музыка -->
-<audio id="bgMusic" src="My.mp3" loop preload="auto"></audio>
-
-<script>
-document.addEventListener("DOMContentLoaded", () => {
-    const audio = document.getElementById("bgMusic");
-
-    // Автозапуск ТИХО
-    function tryAutoPlay() {
-        audio.volume = 0.0; // тишина при старте
-        audio.play().catch(() => {}); // игнорируем ошибку бездействия пользователя
-    }
-
-    tryAutoPlay();
-
-    // После первого клика/тапа — включить громкость
-    function enableSound() {
-        let volume = 0.0;
-        const targetVolume = 0.65; // громкость после клика
-        const fadeSpeed = 0.02; // скорость повышения
-
-        const fade = setInterval(() => {
-            if (volume < targetVolume) {
-                volume += fadeSpeed;
-                audio.volume = volume;
-            } else {
-                clearInterval(fade);
-            }
-        }, 120);
-
-        audio.play().catch(() => {});
-        document.removeEventListener("click", enableSound);
-        document.removeEventListener("touchstart", enableSound);
-    }
-
-    document.addEventListener("click", enableSound, { once: true });
-    document.addEventListener("touchstart", enableSound, { once: true });
-});
-</script>
 </body>
 </html>
