@@ -3,262 +3,256 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>YETI — Кафе</title>
+<title>YETI — кафе</title>
 <style>
-  /* Подключаем шрифт */
   @font-face {
     font-family: 'ZingRust';
     src: url('ZingRust.ttf') format('truetype');
   }
 
-  html, body {
+  body {
     margin: 0;
-    padding: 0;
     font-family: 'ZingRust', sans-serif;
     overflow-x: hidden;
-  }
-
-  body {
-    /* Подвижный градиентный фон */
-    background: linear-gradient(270deg, #ffb6c1, #ffffff);
-    background-size: 400% 400%;
-    animation: gradientBG 15s ease infinite;
+    background: linear-gradient(120deg, #ffc0cb, #ffffff);
     position: relative;
   }
 
-  /* Анимация градиента */
-  @keyframes gradientBG {
-    0% {background-position: 0% 50%;}
-    50% {background-position: 100% 50%;}
-    100% {background-position: 0% 50%;}
-  }
-
-  /* Фиксированное граффити */
   body::before {
-    content: '';
+    content: "";
     position: fixed;
-    top: 0; left: 0;
-    width: 100%; height: 100%;
+    top: 0; left: 0; right: 0; bottom: 0;
     background: url('graffiti.png') no-repeat center center;
     background-size: cover;
-    pointer-events: none;
-    z-index: 0;
+    z-index: -1;
   }
 
-  /* Логотип */
-  .logo {
-    position: absolute;
-    top: 20px;
-    left: 20px;
-    z-index: 10;
-    width: 120px;
+  .moving-gradient {
+    position: fixed;
+    top: 0; left: 0; width: 200%; height: 200%;
+    background: linear-gradient(120deg, #ffc0cb, #ffffff, #ffc0cb);
+    animation: moveGradient 20s linear infinite;
+    z-index: -2;
   }
 
-  /* Вращающийся стикер */
+  @keyframes moveGradient {
+    0% { transform: translate(0,0); }
+    50% { transform: translate(-50%, -50%); }
+    100% { transform: translate(0,0); }
+  }
+
+  header {
+    text-align: center;
+    margin-top: 50px;
+  }
+
+  header img {
+    width: 200px;
+  }
+
+  .main-text {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 20px;
+    border: 3px solid #377ceb;
+    border-radius: 20px;
+    color: #377ceb;
+    text-align: center;
+    text-shadow: 2px 2px 5px rgba(0,0,0,0.3);
+    font-size: 1.2em;
+  }
+
   .sticker {
-    position: absolute;
+    position: fixed;
     top: 20px;
     right: 20px;
-    width: 80px;
-    z-index: 10;
-    animation: rotateSticker 10s linear infinite;
-    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    width: 100px;
+    animation: rotateSticker 5s linear infinite;
+    box-shadow: 3px 3px 10px rgba(0,0,0,0.3);
   }
 
   @keyframes rotateSticker {
-    from { transform: rotate(0deg); }
-    to { transform: rotate(360deg); }
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
   }
 
-  /* Главный текст */
-  .main-text {
-    margin: 150px 20px 40px 20px;
-    padding: 20px;
+  .section-title {
+    font-size: 2em;
     color: #377ceb;
-    border: 3px solid #377ceb;
-    border-radius: 20px;
-    text-align: center;
-    font-size: 1.5em;
-    text-shadow: 2px 2px 5px rgba(0,0,0,0.2);
-    z-index: 5;
-    position: relative;
+    margin: 50px 0 20px 20px;
   }
 
-  /* Мазок для текста */
   .paint-text {
     display: inline-block;
-    background: #ff8abf;
-    padding: 10px 20px;
-    margin: 20px;
-    border-radius: 10px;
+    padding: 5px 15px;
+    background-color: #ff8abf;
     color: #377ceb;
-    font-size: 1.2em;
-    text-align: center;
+    font-size: 1.5em;
+    font-family: 'ZingRust', sans-serif;
+    margin-left: 20px;
   }
 
-  /* Карусель */
   .carousel-container {
     position: relative;
-    width: 90%;
-    margin: 20px auto;
+    margin: 20px;
     overflow: hidden;
+    max-width: 90%;
   }
 
-  .carousel-track {
+  .carousel {
     display: flex;
     transition: transform 0.5s ease-in-out;
+    cursor: grab;
   }
 
-  .carousel-slide {
-    min-width: 100%;
-    position: relative;
+  .carousel img {
+    max-width: 100%;
+    border-radius: 20px;
+    margin-right: 20px;
     user-select: none;
   }
 
-  .carousel-slide img {
-    width: 100%;
-    border-radius: 20px;
-  }
-
-  .carousel-caption {
-    position: absolute;
-    bottom: 15px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: #ffffffdd;
-    color: #377ceb;
+  .carousel-text {
+    margin-top: 10px;
+    display: inline-block;
+    padding: 10px;
     border: 2px solid #377ceb;
     border-radius: 15px;
-    padding: 10px 20px;
-    font-family: 'ZingRust';
+    color: #377ceb;
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.2);
+    font-size: 1em;
   }
 
-  /* Точки для карусели */
   .dots {
     text-align: center;
-    margin: 10px;
+    margin-top: 10px;
   }
 
   .dot {
     display: inline-block;
     width: 12px;
     height: 12px;
-    background: #ccc;
     border-radius: 50%;
+    background-color: #ccc;
     margin: 0 5px;
     cursor: pointer;
   }
 
   .dot.active {
-    background: #377ceb;
+    background-color: #377ceb;
   }
 
-  /* Плашка от краски */
-  .paint-label {
-    display: inline-block;
-    background: #ffb6c1;
-    color: #377ceb;
-    font-size: 1.5em;
-    padding: 10px 20px;
-    margin: 20px;
-    border-radius: 10px;
+  audio {
+    display: none;
   }
 </style>
 </head>
 <body>
-
-<img src="logo.png" class="logo" alt="Logo">
-<img src="sticker.png" class="sticker" alt="Sticker">
-
-<div class="main-text">
-  YETI — кафе с авторскими напитками на основе чая и натурального пюре и завтраками целый день. Это место для тех, кто живёт в движении, выбирает вкусы, свободу и комьюнити по вайбу
-</div>
-
-<div class="paint-text">салаты</div>
-
-<!-- Карусель салаты -->
-<div class="carousel-container" id="salads-carousel">
-  <div class="carousel-track">
-    <div class="carousel-slide">
-      <img src="салат1.jpg" alt="Салат 1">
-      <div class="carousel-caption">Салат с ростбифом и соусом из тунца 540 ₽</div>
-    </div>
-    <div class="carousel-slide">
-      <img src="салат2.jpg" alt="Салат 2">
-      <div class="carousel-caption">Салат фитнес с соусом дзадзики и семенами льна 360₽</div>
-    </div>
-    <div class="carousel-slide">
-      <img src="салат3.jpg" alt="Салат 3">
-      <div class="carousel-caption">Грин салат с лангустинами 570₽</div>
-    </div>
+<div class="moving-gradient"></div>
+<header>
+  <img src="logo.png" alt="Logo">
+  <div class="main-text">
+    YETI — кафе с авторскими напитками на основе чая и натурального пюре и завтраками целый день. Это место для тех, кто живёт в движении, выбирает вкусы, свободу и комьюнити по вайбу
   </div>
-  <div class="dots"></div>
-</div>
+</header>
 
-<!-- Здесь можно добавить остальные карусели аналогично -->
+<img src="sticker.png" alt="sticker" class="sticker">
 
-<audio id="bg-music" autoplay loop>
-  <source src="My.mp3" type="audio/mpeg">
-</audio>
+<!-- Секции и карусели -->
+<section>
+  <div class="section-title"><span class="paint-text">Салаты</span></div>
+  <div class="carousel-container" data-carousel="salads">
+    <div class="carousel">
+      <div>
+        <img src="салат1.jpg" draggable="false">
+        <div class="carousel-text">Салат с ростбифом и соусом из тунца 540 ₽</div>
+      </div>
+      <div>
+        <img src="салат2.jpg" draggable="false">
+        <div class="carousel-text">Салат фитнес с соусом дзадзики и семенами льна 360₽</div>
+      </div>
+      <div>
+        <img src="салат3.jpg" draggable="false">
+        <div class="carousel-text">Грин салат с лангустинами 570₽</div>
+      </div>
+    </div>
+    <div class="dots"></div>
+  </div>
+</section>
+
+<section>
+  <div class="section-title"><span class="paint-text" style="background-color:#ffc0cb">Каши</span></div>
+  <div class="carousel-container" data-carousel="porridges">
+    <div class="carousel">
+      <div>
+        <img src="каша1.jpg" draggable="false">
+        <div class="carousel-text">Каша овсяная с тартаром из киви и грецким орехом 360₽</div>
+      </div>
+      <div>
+        <img src="каша2.jpg" draggable="false">
+        <div class="carousel-text">Каша рисовая с манго, соусом из маракуйи и миндалем 360₽</div>
+      </div>
+      <div>
+        <img src="каша3.jpg" draggable="false">
+        <div class="carousel-text">Зеленая гречка с яйцом пашот и пармезаном 360₽</div>
+      </div>
+      <div>
+        <img src="каша4.jpg" draggable="false">
+        <div class="carousel-text">Киноа с лангустинами и пепперони в соусе биск 620₽</div>
+      </div>
+    </div>
+    <div class="dots"></div>
+  </div>
+</section>
+
+<!-- Остальные карусели делаем по аналогии -->
+<!-- Яйца, Брускетты, Драники, Сладкий вайб, Авторские напитки -->
+
+<audio id="bgMusic" src="My.mp3" autoplay loop></audio>
 
 <script>
-  // Карусель
-  class Carousel {
-    constructor(containerId, interval=5000){
-      this.container = document.getElementById(containerId);
-      this.track = this.container.querySelector('.carousel-track');
-      this.slides = Array.from(this.track.children);
-      this.dotsContainer = this.container.querySelector('.dots');
-      this.currentIndex = 0;
-      this.interval = interval;
-      this.isPaused = false;
+  const carousels = document.querySelectorAll('.carousel-container');
 
-      this.createDots();
-      this.startAutoSlide();
-      this.addHoldListeners();
+  carousels.forEach(container => {
+    const carousel = container.querySelector('.carousel');
+    const items = carousel.children;
+    const dotsContainer = container.querySelector('.dots');
+    let index = 0;
+    let interval;
+    let isDragging = false;
+
+    // Создание точек
+    for (let i = 0; i < items.length; i++) {
+      const dot = document.createElement('span');
+      dot.classList.add('dot');
+      if(i===0) dot.classList.add('active');
+      dot.addEventListener('click', () => { index = i; updateCarousel(); resetInterval(); });
+      dotsContainer.appendChild(dot);
     }
 
-    createDots() {
-      this.slides.forEach((_, idx) => {
-        const dot = document.createElement('span');
-        dot.classList.add('dot');
-        if(idx === 0) dot.classList.add('active');
-        dot.addEventListener('click', () => this.goToSlide(idx));
-        this.dotsContainer.appendChild(dot);
-      });
-      this.dots = Array.from(this.dotsContainer.children);
+    const dots = dotsContainer.querySelectorAll('.dot');
+
+    function updateCarousel() {
+      carousel.style.transform = `translateX(-${index * 100}%)`;
+      dots.forEach(dot => dot.classList.remove('active'));
+      dots[index].classList.add('active');
     }
 
-    goToSlide(index) {
-      this.track.style.transform = `translateX(-${index * 100}%)`;
-      this.dots[this.currentIndex].classList.remove('active');
-      this.dots[index].classList.add('active');
-      this.currentIndex = index;
+    function nextSlide() {
+      index = (index + 1) % items.length;
+      updateCarousel();
     }
 
-    nextSlide() {
-      let nextIndex = (this.currentIndex + 1) % this.slides.length;
-      this.goToSlide(nextIndex);
+    function resetInterval() {
+      clearInterval(interval);
+      interval = setInterval(nextSlide, 5000);
     }
 
-    startAutoSlide() {
-      this.timer = setInterval(() => {
-        if(!this.isPaused) this.nextSlide();
-      }, this.interval);
-    }
+    carousel.addEventListener('mousedown', () => isDragging = true);
+    carousel.addEventListener('mouseup', () => { isDragging = false; resetInterval(); });
 
-    addHoldListeners() {
-      this.slides.forEach(slide => {
-        slide.addEventListener('mousedown', () => { this.isPaused = true; });
-        slide.addEventListener('mouseup', () => { this.isPaused = false; });
-        slide.addEventListener('mouseleave', () => { this.isPaused = false; });
-      });
-    }
-  }
-
-  // Инициализация каруселей
-  new Carousel('salads-carousel');
+    interval = setInterval(nextSlide, 5000);
+  });
 </script>
-
 </body>
 </html>
