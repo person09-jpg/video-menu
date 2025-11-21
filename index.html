@@ -287,5 +287,44 @@
   }, 5000);
 </script>
 
+<!-- Автоматическая музыка -->
+<audio id="bgMusic" src="My.mp3" loop preload="auto"></audio>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    const audio = document.getElementById("bgMusic");
+
+    // Автозапуск ТИХО
+    function tryAutoPlay() {
+        audio.volume = 0.0; // тишина при старте
+        audio.play().catch(() => {}); // игнорируем ошибку бездействия пользователя
+    }
+
+    tryAutoPlay();
+
+    // После первого клика/тапа — включить громкость
+    function enableSound() {
+        let volume = 0.0;
+        const targetVolume = 0.65; // громкость после клика
+        const fadeSpeed = 0.02; // скорость повышения
+
+        const fade = setInterval(() => {
+            if (volume < targetVolume) {
+                volume += fadeSpeed;
+                audio.volume = volume;
+            } else {
+                clearInterval(fade);
+            }
+        }, 120);
+
+        audio.play().catch(() => {});
+        document.removeEventListener("click", enableSound);
+        document.removeEventListener("touchstart", enableSound);
+    }
+
+    document.addEventListener("click", enableSound, { once: true });
+    document.addEventListener("touchstart", enableSound, { once: true });
+});
+</script>
 </body>
 </html>
