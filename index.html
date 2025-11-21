@@ -3,236 +3,266 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Меню</title>
+<title>YETI Меню</title>
 
 <style>
-@font-face {
-  font-family: "ZingRust";
-  src: url("ZingRust.ttf");
-}
+  @font-face {
+    font-family: "ZingRust";
+    src: url("ZingRust.ttf");
+  }
 
-body {
-  margin: 0;
-  padding: 0;
-  font-family: "ZingRust", Arial, sans-serif;
-  color: #377ceb;
-  background: linear-gradient(90deg, #ff8abf, #ffffff, #ff8abf);
-  background-size: 300% 300%;
-  animation: gradientMove 12s ease infinite;
-}
-@keyframes gradientMove {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
+  body {
+    margin: 0;
+    font-family: "ZingRust", sans-serif;
+    color: #377ceb;
+    text-align: center;
+    background: linear-gradient(90deg,#ff8abf,#fff,#ff8abf);
+    background-size: 300% 300%;
+    animation: gradientMove 12s ease infinite;
+  }
 
-.sticker {
-  position: fixed;
-  top: 15px;
-  right: 15px;
-  width: 90px;
-  z-index: 1000;
-  filter: drop-shadow(0 8px 12px rgba(0,0,0,0.25));
-  animation: spin 8s linear infinite;
-}
-@keyframes spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
-}
+  @keyframes gradientMove {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
 
-.header {
-  text-align: center;
-  padding: 20px;
-}
-.header img {
-  max-width: 180px;
-  width: 60%;
-}
+  .header img { max-width:180px; width:60%; margin-top:20px; }
+  .logo-text {
+    display:block;
+    margin:15px auto;
+    padding:15px;
+    border: 2px solid #377ceb;
+    border-radius: 15px;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.25);
+    font-size:1.1em;
+    max-width:90%;
+  }
 
-.label {
-  background: white;
-  color: #377ceb;
-  border-radius: 18px;
-  padding: 18px;
-  margin: 20px auto 10px;
-  width: 90%;
-  max-width: 700px;
-  box-shadow: 0 8px 18px rgba(0,0,0,0.15);
-  font-family: "ZingRust", Arial, sans-serif;
-  font-size: 1.3em;
-  text-align: center;
-}
+  /* Стикер */
+  .sticker {
+    position: fixed;
+    top: 15px;
+    right: 15px;
+    width: 90px;
+    z-index: 1000;
+    filter: drop-shadow(0 8px 12px rgba(0,0,0,0.25));
+    animation: spin 8s linear infinite;
+  }
 
-.paint-label {
-  position: relative;
-  display: inline-block;
-  background: #ff8abf;
-  color: #377ceb;
-  font-family: "ZingRust", Arial, sans-serif;
-  font-size: 1.3em;
-  padding: 10px 20px;
-  border-radius: 8px;
-  margin: 20px 0;
-  transform: rotate(-5deg);
-}
+  @keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
 
-.carousel {
-  position: relative;
-  max-width: 700px;
-  margin: 20px auto 50px;
-  overflow: hidden;
-  border-radius: 20px;
-  box-shadow: 0 10px 20px rgba(0,0,0,0.25);
-}
-.carousel-track {
-  display: flex;
-  transition: transform 0.5s ease-in-out;
-}
-.carousel-slide {
-  min-width: 100%;
-  position: relative;
-}
-.carousel-slide img, .carousel-slide video {
-  width: 100%;
-  border-radius: 20px;
-}
-.carousel-caption {
-  position: absolute;
-  bottom: 15px;
-  left: 50%;
-  transform: translateX(-50%);
-  background: white;
-  padding: 12px 20px;
-  border-radius: 15px;
-  box-shadow: 0 6px 15px rgba(0,0,0,0.2);
-  font-family: "ZingRust", Arial, sans-serif;
-  color: #377ceb;
-  font-size: 1em;
-  text-align: center;
-}
+  .paint-label {
+    display: block;
+    background: #ff8abf;
+    padding: 12px 20px;
+    font-size: 1.3em;
+    margin: 25px auto 10px;
+    border-radius: 15px;
+    transform: rotate(-3deg);
+    max-width: 250px;
+    color: #377ceb;
+  }
 
-.carousel-nav {
-  text-align: center;
-  margin-top: 10px;
-}
-.carousel-dot {
-  display: inline-block;
-  width: 12px;
-  height: 12px;
-  margin: 0 5px;
-  background: #ccc;
-  border-radius: 50%;
-  cursor: pointer;
-}
-.carousel-dot.active {
-  background: #377ceb;
-}
+  .carousel-container {
+    position: relative;
+    width: 90%;
+    max-width: 700px;
+    margin: 15px auto 40px;
+    overflow: hidden;
+    border-radius: 15px;
+  }
 
-.feedback-link {
-  display: inline-block;
-  margin: 40px auto 60px;
-  background: #377ceb;
-  color: #fff;
-  padding: 18px 30px;
-  border-radius: 15px;
-  font-size: 1.2em;
-  font-weight: 700;
-  text-decoration: none;
-  box-shadow: 0 8px 16px rgba(0,0,0,0.15);
-  transition: transform 0.25s ease, box-shadow 0.25s ease;
-}
-.feedback-link:hover {
-  transform: scale(1.05);
-  box-shadow: 0 12px 22px rgba(0,0,0,0.25);
-}
+  .carousel-track {
+    display: flex;
+    transition: transform 0.5s ease;
+  }
+
+  .carousel-slide {
+    min-width: 100%;
+    box-sizing: border-box;
+    text-align: center;
+    position: relative;
+  }
+
+  .carousel-slide img,
+  .carousel-slide video {
+    width: 100%;
+    border-radius: 15px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+  }
+
+  .slide-label {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #fff;
+    color: #377ceb;
+    padding: 10px 15px;
+    border-radius: 12px;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+    max-width:90%;
+  }
+
+  .carousel-nav {
+    text-align:center;
+    margin-top:10px;
+  }
+
+  .dot {
+    height:12px;
+    width:12px;
+    margin:0 5px;
+    background:#bbb;
+    border-radius:50%;
+    display:inline-block;
+    cursor:pointer;
+  }
+
+  .dot.active { background:#377ceb; }
+
+  .feedback-link {
+    display: inline-block;
+    margin: 40px auto 60px;
+    background: #377ceb;
+    color: #fff;
+    padding: 18px 30px;
+    border-radius: 15px;
+    font-size: 1.2em;
+    font-weight: 700;
+    text-decoration: none;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+  }
+
+  .feedback-link:hover {
+    transform: scale(1.05);
+    box-shadow: 0 12px 22px rgba(0,0,0,0.25);
+  }
 </style>
 </head>
 <body>
 
+<!-- Музыка -->
+<audio id="bgMusic" src="My.mp3" autoplay loop></audio>
+
 <img src="sticker.png" class="sticker" alt="sticker">
 
-<header class="header">
+<header>
   <img src="logo.png" alt="Логотип">
+  <span class="logo-text">
+    YETI — кафе с авторскими напитками на основе чая и натурального пюре и завтраками целый день.<br>
+    Это место для тех, кто живёт в движении, выбирает вкусы, свободу и комьюнити по вайбу
+  </span>
 </header>
-
-<div class="label">
-YETI — кафе с авторскими напитками на основе чая и натурального пюре и завтраками целый день. Это место для тех, кто живёт в движении, выбирает вкусы, свободу и комьюнити по вайбу.
-</div>
 
 <main>
 
-<!-- Видео карусель -->
-<div class="label">новый ритуал, который работает лучше</div>
-<div class="carousel" id="videoCarousel">
-  <div class="carousel-track">
-    <div class="carousel-slide"><video src="video1.gif.mp4" muted autoplay loop></video></div>
-    <div class="carousel-slide"><video src="video2.gif.mp4" muted autoplay loop></video></div>
-    <div class="carousel-slide"><video src="video3.gif.mp4" muted autoplay loop></video></div>
-    <div class="carousel-slide"><video src="video4.gif.mp4" muted autoplay loop></video></div>
+  <!-- Видео карусель -->
+  <span class="paint-label">Новый ритуал, который работает лучше</span>
+  <div class="carousel-container" id="videoCarousel">
+    <div class="carousel-track">
+      <div class="carousel-slide"><video autoplay muted loop playsinline><source src="video1.gif.mp4" type="video/mp4"></video></div>
+      <div class="carousel-slide"><video autoplay muted loop playsinline><source src="video2.gif.mp4" type="video/mp4"></video></div>
+      <div class="carousel-slide"><video autoplay muted loop playsinline><source src="video3.gif.mp4" type="video/mp4"></video></div>
+      <div class="carousel-slide"><video autoplay muted loop playsinline><source src="video4.gif.mp4" type="video/mp4"></video></div>
+    </div>
+    <div class="carousel-nav"></div>
   </div>
-  <div class="carousel-nav" id="videoDots"></div>
-</div>
 
-<!-- Карусель меню напитков в конце -->
-<div class="paint-label">Авторские напитки</div>
-<div class="carousel" id="drinksCarousel">
-  <div class="carousel-track">
-    <div class="carousel-slide"><img src="menu_drinks.png" alt="Меню напитков"><div class="carousel-caption">Меню напитков</div></div>
-    <div class="carousel-slide"><img src="menu_season.png" alt="Меню сезонок"><div class="carousel-caption">Сезонные напитки</div></div>
+  <!-- Яйца -->
+  <span class="paint-label" style="transform:rotate(-2deg);">Яйца</span>
+  <div class="carousel-container" id="eggCarousel">
+    <div class="carousel-track">
+      <div class="carousel-slide"><img src="Яйца1.jpg"><div class="slide-label">Глазунья с ростбифом и белой фасолью 440 ₽</div></div>
+      <div class="carousel-slide"><img src="Яйца2.jpg"><div class="slide-label">Французский омлет с мортаделлой и зеленью 440 ₽</div></div>
+      <div class="carousel-slide"><img src="Яйца3.jpg"><div class="slide-label">Скрембл с лососем и страчателлой 690₽</div></div>
+    </div>
+    <div class="carousel-nav"></div>
   </div>
-  <div class="carousel-nav" id="drinksDots"></div>
-</div>
 
-<audio id="bgMusic" src="My.mp3" autoplay loop></audio>
-<a class="feedback-link" href="https://t.me/your_link" target="_blank">Жалобы и предложения</a>
+  <!-- Сладкий вайб -->
+  <span class="paint-label" style="transform:rotate(-2deg);">Сладкий вайб</span>
+  <div class="carousel-container" id="vibeCarousel">
+    <div class="carousel-track">
+      <div class="carousel-slide"><img src="Вайб1.jpg"><div class="slide-label">Карамельная бриошь с бананом и трюфельной карамелью 360₽</div></div>
+      <div class="carousel-slide"><img src="Вайб2.jpg"><div class="slide-label">Лавандовый крем с тартаром из киви и кислой маракуйи 440₽</div></div>
+      <div class="carousel-slide"><img src="Вайб3.jpg"><div class="slide-label">Панкейки с фисташковым кремом и гелем из малины 380₽</div></div>
+    </div>
+    <div class="carousel-nav"></div>
+  </div>
+
+  <!-- Авторские напитки -->
+  <span class="paint-label" style="transform:rotate(1deg);">Авторские напитки</span>
+  <div class="carousel-container" id="drinksCarousel">
+    <div class="carousel-track">
+      <div class="carousel-slide"><img src="Menu.png"></div>
+      <div class="carousel-slide"><img src="Сезонки.png"></div>
+      <div class="carousel-slide"><video autoplay muted loop playsinline><source src="video1.gif.mp4" type="video/mp4"></video></div>
+      <div class="carousel-slide"><video autoplay muted loop playsinline><source src="video2.gif.mp4" type="video/mp4"></video></div>
+      <div class="carousel-slide"><video autoplay muted loop playsinline><source src="video3.gif.mp4" type="video/mp4"></video></div>
+      <div class="carousel-slide"><video autoplay muted loop playsinline><source src="video4.gif.mp4" type="video/mp4"></video></div>
+    </div>
+    <div class="carousel-nav"></div>
+  </div>
+
+  <!-- Кнопка -->
+  <a href="https://t.me/your_link" target="_blank" class="feedback-link">Жалобы и предложения</a>
 
 </main>
 
 <script>
-function initCarousel(carouselId, dotsId, interval=5000) {
-  const carousel = document.getElementById(carouselId);
-  const track = carousel.querySelector('.carousel-track');
+function initCarousel(id, interval=5000){
+  const container = document.getElementById(id);
+  const track = container.querySelector('.carousel-track');
   const slides = Array.from(track.children);
-  const dotsContainer = document.getElementById(dotsId);
-  let currentIndex = 0;
+  const nav = container.querySelector('.carousel-nav');
+  let index = 0;
+  let paused = false;
 
-  slides.forEach((_, i) => {
-    const dot = document.createElement('div');
-    dot.classList.add('carousel-dot');
+  slides.forEach((s,i)=>{
+    const dot = document.createElement('span');
+    dot.classList.add('dot');
     if(i===0) dot.classList.add('active');
-    dot.addEventListener('click', () => { goToSlide(i); resetInterval(); });
-    dotsContainer.appendChild(dot);
+    dot.addEventListener('click',()=>{index=i; update();});
+    nav.appendChild(dot);
   });
-  const dots = Array.from(dotsContainer.children);
 
-  function goToSlide(index) {
-    track.style.transform = `translateX(-${index * 100}%)`;
-    dots.forEach(d => d.classList.remove('active'));
+  const dots = Array.from(nav.children);
+
+  function update(){
+    track.style.transform = `translateX(-${index*100}%)`;
+    dots.forEach(d=>d.classList.remove('active'));
     dots[index].classList.add('active');
-    currentIndex = index;
   }
 
-  let carouselInterval = setInterval(() => {
-    let nextIndex = (currentIndex+1)%slides.length;
-    goToSlide(nextIndex);
+  let autoSlide = setInterval(()=>{
+    if(!paused){
+      index = (index+1)%slides.length;
+      update();
+    }
   }, interval);
 
-  function resetInterval() {
-    clearInterval(carouselInterval);
-    carouselInterval = setInterval(() => {
-      let nextIndex = (currentIndex+1)%slides.length;
-      goToSlide(nextIndex);
-    }, interval);
-  }
-
-  carousel.addEventListener('mouseenter', () => clearInterval(carouselInterval));
-  carousel.addEventListener('mouseleave', () => resetInterval());
-  carousel.addEventListener('touchstart', () => clearInterval(carouselInterval));
-  carousel.addEventListener('touchend', () => resetInterval());
+  // Остановка при нажатии мыши / касании
+  container.addEventListener('mousedown', ()=>paused=true);
+  container.addEventListener('mouseup', ()=>paused=false);
+  container.addEventListener('mouseleave', ()=>paused=false);
+  container.addEventListener('touchstart', ()=>paused=true);
+  container.addEventListener('touchend', ()=>paused=false);
 }
 
-initCarousel('videoCarousel', 'videoDots');
-initCarousel('drinksCarousel', 'drinksDots');
+initCarousel('videoCarousel');
+initCarousel('eggCarousel');
+initCarousel('vibeCarousel');
+initCarousel('drinksCarousel');
+
+// Автозапуск музыки и остановка при закрытии вкладки
+const music = document.getElementById('bgMusic');
+window.addEventListener('beforeunload', ()=>music.pause());
 </script>
 
 </body>
